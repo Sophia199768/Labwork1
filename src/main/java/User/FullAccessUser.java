@@ -1,12 +1,12 @@
 package User;
 
 public class FullAccessUser extends State {
-    public FullAccessUser(User _user) {
-        super(_user);
+    public FullAccessUser(User user) {
+        super(user);
     }
 
     @Override
-    State addMissingData(String _address, int _passport) {
+    State addMissingData(String address, Integer passport) {
         return this;
     }
 }

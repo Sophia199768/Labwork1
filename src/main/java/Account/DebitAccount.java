@@ -10,29 +10,36 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DebitAccount implements DebitDepositAccountInterface {
-    private int amountOfMoney;
-    private double procent;
-    private int emptyAccount = 0;
-    private int year = 365;
-    private int procentMoneyAmount;
+    private Integer amountOfMoney;
+    private Integer procent;
+    private Integer emptyAccount = 0;
+    private Integer year = 365;
+    private Integer procentMoneyAmount;
+    private Integer noProcent = 0;
     private List<Snapshot> snapshots = new LinkedList<Snapshot>();
     private User user;
 
-    public DebitAccount(int _amountOfMoney, double _procent, User _user) {
-        amountOfMoney = _amountOfMoney;
-        procent = _procent;
+    public DebitAccount(Integer amountOfMoney, Integer procent, User user) {
+        this.amountOfMoney = amountOfMoney;
+        this.procent = procent;
         procentMoneyAmount = 0;
-        user = _user;
+        this.user = user;
     }
 
     @Override
     public void addProcent() {
         if (amountOfMoney > emptyAccount) {
             amountOfMoney += procentMoneyAmount;
-            procentMoneyAmount = 0;
+            procentMoneyAmount = noProcent;
         }
     }
 
+    /**
+     * <p>
+     *     CountProcentMoney
+     *     Function count percent money for concrete user
+     * </p>
+     */
     @Override
     public void countProcentMoney() {
 
@@ -40,21 +47,45 @@ public class DebitAccount implements DebitDepositAccountInterface {
     }
 
 
-    public void setAmountOfMoney(int _amountOfMoney) { amountOfMoney = _amountOfMoney; }
-    public void setProcentMoneyAmount(int _procentMoneyAmount) { procentMoneyAmount = _procentMoneyAmount; }
+    public void setAmountOfMoney(Integer _amountOfMoney) { amountOfMoney = _amountOfMoney; }
+    public void setProcentMoneyAmount(Integer _procentMoneyAmount) { procentMoneyAmount = _procentMoneyAmount; }
 
+    /**
+     * <p>
+     *     ChangeProcent
+     *     Function changes percent for user
+     * </p>
+     */
     @Override
-    public void changeProcent(double newProcent) {
+    public void changeProcent(Integer newProcent) {
         procent = newProcent;
     }
+
+    /**
+     * <p>
+     *   SetMoney
+     *   Function to set money at user account.
+     * </p>
+     * @return Result interface
+     */
     @Override
-    public ResultInterface setMoney(int setMoneyAmount) {
+    public ResultInterface setMoney(Integer setMoneyAmount) {
         amountOfMoney += setMoneyAmount;
         createSnapshot();
         return new SuccessSetMoney();
     }
+
+    /**
+     * <p>
+     *   GetMoney
+     *   Function to get money from user account.
+     *   If all is alright function will return SuccessGetMoney result.
+     *   If user hasn't got insufficient amount of money function will return Negative result.
+     * </p>
+     * @return Result interface
+     */
     @Override
-    public ResultInterface getMoney(int getMoneyAmount) {
+    public ResultInterface getMoney(Integer getMoneyAmount) {
         if (amountOfMoney >= getMoneyAmount) {
             amountOfMoney -= getMoneyAmount;
             return new NegativeAmountOfMoney("Insufficient money in the account");
@@ -64,21 +95,39 @@ public class DebitAccount implements DebitDepositAccountInterface {
         return new SuccessGetMoney();
     }
 
+    /**
+     * <p>
+     *     Restore
+     *     Helps cansel transactions.
+     * </p>
+     */
     @Override
     public void restore() {
         snapshots.get(snapshots.size() - 1).restore();
     }
     public void createSnapshot() { snapshots.add(new Snapshot(amountOfMoney, procentMoneyAmount)); }
 
+    /**
+     * <p>
+     *     Class snapshot
+     *     To rememeber all information in current moment. It helps to cansel transaction.
+     * </p>
+     */
     private class Snapshot {
-        private int amountOfMoney;
-        private int procentMoneyAmount;
+        private Integer amountOfMoney;
+        private Integer procentMoneyAmount;
 
-        public Snapshot(int _amountOfMoney, int _procentMoneyAmount) {
+        public Snapshot(Integer _amountOfMoney, Integer _procentMoneyAmount) {
             amountOfMoney = _amountOfMoney;
             procentMoneyAmount = _procentMoneyAmount;
         }
 
+        /**
+         * <p>
+         *   Restore
+         *   Function to restore old information
+         * </p>
+         */
         public void restore() {
             setAmountOfMoney(amountOfMoney);
             setProcentMoneyAmount(procentMoneyAmount);

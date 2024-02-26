@@ -3,7 +3,7 @@ package Account;
 import Result.ResultInterface;
 
 public interface AccountInterface {
-    ResultInterface setMoney(int setMoneyAmount);
-    ResultInterface getMoney(int getMoneyAmount);
+    ResultInterface setMoney(Integer setMoneyAmount);
+    ResultInterface getMoney(Integer getMoneyAmount);
     void restore();
 }

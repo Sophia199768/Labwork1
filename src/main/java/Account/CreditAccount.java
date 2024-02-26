@@ -4,61 +4,87 @@ import Result.NegativeAmountOfMoney;
 import Result.ResultInterface;
 import Result.SuccessGetMoney;
 import Result.SuccessSetMoney;
-import User.User;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class CreditAccount implements CreditAccountInterface {
-    private double procentToOverdraft = 0.2;
-    private int amountOfMoney;
-    private int overdraft;
-    private int creditMoney;
-    private double comission;
-    private List<Snapshot> snapshots = new LinkedList<Snapshot>();
-    private User user;
+    private Double procentToOverdraft;
+    private Integer amountOfMoney;
+    private Integer overdraft;
+    private Integer creditMoney;
+    private Double comission;
+    private final List<Snapshot> snapshots = new LinkedList<>();
 
-    public CreditAccount(int _creditMoney, int _procentToOverdraft, int _commision, User _user) {
-        amountOfMoney = _creditMoney;
-        countOverdraft(_creditMoney);
-        procentToOverdraft = _procentToOverdraft;
-        comission = _commision;
-        creditMoney = _creditMoney;
-        user = _user;
+    public CreditAccount(Integer creditMoney, Double procentToOverdraft, Double commision) {
+        this.amountOfMoney = creditMoney;
+        this.procentToOverdraft = procentToOverdraft;
+        this.comission = commision;
+        this.creditMoney = creditMoney;
+        countOverdraft(creditMoney);
     }
 
     @Override
-    public void setProcentToOverdraft(int _procentToOverdraft) { procentToOverdraft = _procentToOverdraft; }
+    public void setProcentToOverdraft(Double _procentToOverdraft) { procentToOverdraft = _procentToOverdraft; }
 
-    public void setAmountOfMoney(int _amountOfMoney) { amountOfMoney = _amountOfMoney; }
+    public void setAmountOfMoney(Integer _amountOfMoney) { amountOfMoney = _amountOfMoney; }
 
-    public void setOverdraft(int _overdraft) { overdraft = _overdraft; }
+    public void setOverdraft(Integer _overdraft) { overdraft = _overdraft; }
 
-    public void setCreditMoney(int _creditMoney) { creditMoney = _creditMoney; }
+    public void setCreditMoney(Integer _creditMoney) { creditMoney = _creditMoney; }
 
-    public void setComission(double _comission) { comission = _comission; }
+    public void setComission(Double _comission) { comission = _comission; }
 
 
+    /**
+     * <p>
+     *   AddComission
+     *   Function help to add comission
+     * </p>
+     */
     @Override
     public void addComission() {
-        if (amountOfMoney <= 0) {
+        Integer startAmountOfMoney = 0;
+        if (amountOfMoney <= startAmountOfMoney) {
             amountOfMoney -= (int)(creditMoney * comission);
         }
     }
 
-    public void countOverdraft(int _amountOfMoney) {
-       overdraft = (int) Math.round(_amountOfMoney * procentToOverdraft);
+    /**
+     * <p>
+     *     CountOverdraft
+     *     Function helps to count overdraft to concrete account
+     * </p>
+     */
+    public void countOverdraft(Integer moneyAmount) {
+       overdraft = (int)Math.round(moneyAmount * procentToOverdraft);
     }
 
+    /**
+     * <p>
+     *   SetMoney
+     *   Function to set money at user account.
+     * </p>
+     * @return Result interface
+     */
     @Override
-    public ResultInterface setMoney(int moneyAmount) {
+    public ResultInterface setMoney(Integer moneyAmount) {
         amountOfMoney += moneyAmount;
         createSnapshot();
         return new SuccessSetMoney();
     }
 
+    /**
+     * <p>
+     *   GetMoney
+     *   Function to get money from user account.
+     *   If all is alright function will return SuccessGetMoney result.
+     *   If user hasn't got insufficient amount of money function will return Negative result.
+     * </p>
+     * @return Result interface
+     */
     @Override
-    public ResultInterface getMoney(int getMoneyAmount) {
+    public ResultInterface getMoney(Integer getMoneyAmount) {
         if (getMoneyAmount > amountOfMoney + overdraft) {
             return new NegativeAmountOfMoney("Insufficient money in the account");
         }
@@ -75,30 +101,54 @@ public class CreditAccount implements CreditAccountInterface {
         return new SuccessGetMoney();
     }
 
+    /**
+     * <p>
+     *     ChangePercent
+     *     To change percent to overdraft.
+     * </p>
+     */
     @Override
     public void changeProcent(double newProcent) { procentToOverdraft = newProcent; }
 
+    /**
+     * <p>
+     *     Restore
+     *     Helps cansel transactions.
+     * </p>
+     */
     @Override
     public void restore() {
         snapshots.get(snapshots.size() - 1).restore();
     }
 
+
+    /**
+     * <p>
+     *     Class snapshot
+     *     To rememeber all information in current moment. It helps to cansel transaction.
+     * </p>
+     */
     public void createSnapshot() { snapshots.add(new Snapshot(amountOfMoney, comission, creditMoney, overdraft)); }
 
     private class Snapshot {
-        private double procentToOverdraft = 0.2;
-        private int amountOfMoney;
-        private int overdraft;
-        private int creditMoney;
-        private double comission;
+        private final Integer amountOfMoney;
+        private final Integer overdraft;
+        private final Integer creditMoney;
+        private final double comission;
 
-        public Snapshot(int _amountOfMoney, double _comission, int _creditMoney, int _overdraft) {
-            amountOfMoney = _amountOfMoney;
-            comission = _comission;
-            creditMoney = _creditMoney;
-            overdraft = _overdraft;
+        public Snapshot(Integer amountOfMoney, Double comission, Integer creditMoney, Integer overdraft) {
+            this.amountOfMoney = amountOfMoney;
+            this.comission = comission;
+            this.creditMoney = creditMoney;
+            this.overdraft = overdraft;
         }
 
+        /**
+         * <p>
+         *   Restore
+         *   Function to restore old information
+         * </p>
+         */
         public void restore() {
             setComission(comission);
             setCreditMoney(creditMoney);

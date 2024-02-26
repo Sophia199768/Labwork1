@@ -3,6 +3,6 @@ package Account;
 import Result.ResultInterface;
 
 public interface StrategyInterface {
-    ResultInterface getMoney(int _amountOfMoney, AccountInterface account);
-    ResultInterface setMoney(int _amountOfMoney, AccountInterface account);
+    ResultInterface getMoney(Integer amountOfMoney, AccountInterface account);
+    ResultInterface setMoney(Integer amountOfMoney, AccountInterface account);
 }

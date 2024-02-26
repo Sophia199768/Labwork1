@@ -1,25 +1,24 @@
 package Bank;
 
 import Account.*;
-
 import User.User;
-
 import java.util.LinkedList;
 import java.util.List;
 
 public class Bank implements BankInterface {
-    private String message;
-    private BankManager manager = new BankManager();
-    private List<DebitDepositAccountInterface> accounts = new LinkedList<DebitDepositAccountInterface>();
-    private List<CreditAccountInterface> creditAccount = new LinkedList<CreditAccountInterface>();
-    private String name;
-    private int procent;
-    private int procentToOverdraft;
+    private final BankManager manager = new BankManager();
+    private final List<DebitDepositAccountInterface> accounts = new LinkedList<>();
+    private final List<CreditAccountInterface> creditAccount = new LinkedList<>();
+    private final String name;
+    private final Integer procent;
+    private final Double procentToOverdraft;
+    private final Integer limit;
 
-    public Bank(String _name, int _procent, int _procentToOverdraft) {
-        name = _name;
-        procent = _procent;
-        procentToOverdraft = _procentToOverdraft;
+    public Bank(String name, Integer procent, Double procentToOverdraft, Integer limit) {
+        this.name = name;
+        this.procent = procent;
+        this.procentToOverdraft = procentToOverdraft;
+        this.limit = limit;
     }
 
     @Override
@@ -32,55 +31,75 @@ public class Bank implements BankInterface {
     }
 
     @Override
-    public void createAccount(String account, User user, int amountOfMoney) {
+    public Integer getLimit() {return limit; }
+
+    /**
+     * <p>
+     *   CreateAccount
+     *   Function to create a new user account.
+     *   User can create three variants of account:
+     *   -deposit
+     *   -credit
+     *   -debit
+     * </p>
+     * @return AccountInterface
+     */
+    @Override
+    public AccountInterface createAccount(String account, User user, Integer amountOfMoney) {
         switch (account) {
-            case "credit":
-                 CreditAccount newCreditAccount = new CreditAccount(amountOfMoney, procent,0, user);
-                 creditAccount.add(newCreditAccount);
-                break;
-            case "depit":
-                DebitAccount newDebitAccount = new DebitAccount(amountOfMoney, procent,user);
+            case "credit" -> {
+                CreditAccount newCreditAccount = new CreditAccount(amountOfMoney, procentToOverdraft, 0.0);
+                creditAccount.add(newCreditAccount);
+                return newCreditAccount;
+            }
+            case "depit" -> {
+                DebitAccount newDebitAccount = new DebitAccount(amountOfMoney, procent, user);
                 accounts.add(newDebitAccount);
-                break;
-            case "deposit":
-                Deposit newDepositAccount = new Deposit(amountOfMoney,procent,0, user);
+                return newDebitAccount;
+            }
+            default -> {
+                Deposit newDepositAccount = new Deposit(amountOfMoney, procent, 0, user);
                 accounts.add(newDepositAccount);
-                break;
+                return newDepositAccount;
+            }
         }
     }
 
     @Override
-    public void changeProcent(int newProcent) {
-        for (int i = 0; i < accounts.size(); i++) {
-        }
+    public void changeProcent(Integer newProcent) {
+        accounts.forEach(account -> account.changeProcent(newProcent));
     }
 
     public void addToBalance() {
-        for (int i = 0; i < accounts.size(); i++) {
-            accounts.get(i).addProcent();
-        }
+        accounts.forEach(account -> account.addProcent());
     }
 
     public void addComission() {
-        for (int i = 0; i < creditAccount.size(); i++) {
-            creditAccount.get(i).addComission();
-        }
+        creditAccount.forEach(account -> account.addComission());
     }
 
     @Override
-    public void setProcentToOverdraft(int newOverdraftProcent) {
-        for (int i = 0; i < creditAccount.size(); i++) {
-            creditAccount.get(i).setProcentToOverdraft(newOverdraftProcent);
-        }
+    public void setProcentToOverdraft(Double newOverdraftProcent) {
+        creditAccount.forEach(account -> account.setProcentToOverdraft(newOverdraftProcent));
     }
 
+    /**
+     * <p>
+     *   CountsDays
+     *   Function helps count days
+     * </p>
+     */
     @Override
     public void countDays() {
-        for (int i = 0; i < accounts.size(); i++) {
-            accounts.get(i).countProcentMoney();
-        }
+        accounts.forEach(account -> account.countProcentMoney());
     }
 
+    /**
+     * <p>
+     *   Update
+     *   Function to add oparations such as addToBalance, addComission.
+     * </p>
+     */
     @Override
     public void update(NotifyMessage filename) {
         if (filename.equals(NotifyMessage.remaining)) {

@@ -7,20 +7,20 @@ import Result.SuccessGetMoney;
 public class TransactionSend implements TransactionInterface {
     private StrategyInterface strategyFrom;
     private StrategyInterface strategyTo;
-    private int amountOfMoney;
+    private Integer amountOfMoney;
     private AccountInterface accountFrom;
     private AccountInterface accountTo;
 
-    public TransactionSend(StrategyInterface _strategyFrom,
-                           StrategyInterface _strategyTo,
-                           int _amountOfMoney,
-                           AccountInterface _accountFrom,
-                           AccountInterface _accountTo) {
-        strategyFrom = _strategyFrom;
-        strategyTo = _strategyTo;
-        accountFrom = _accountFrom;
-        accountTo = _accountTo;
-        amountOfMoney = _amountOfMoney;
+    public TransactionSend(StrategyInterface strategyFrom,
+                           StrategyInterface strategyTo,
+                           Integer amountOfMoney,
+                           AccountInterface accountFrom,
+                           AccountInterface accountTo) {
+        this.strategyFrom = strategyFrom;
+        this.strategyTo = strategyTo;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.amountOfMoney = amountOfMoney;
     }
 
     @Override

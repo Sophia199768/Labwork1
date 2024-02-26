@@ -4,6 +4,6 @@ import Result.ResultInterface;
 
 public interface DebitDepositAccountInterface  extends AccountInterface {
     void addProcent();
-    void changeProcent(double newProcent);
+    void changeProcent(Integer newProcent);
     void countProcentMoney();
 }

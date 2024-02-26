@@ -5,17 +5,18 @@ import Account.StrategyInterface;
 
 public class TransactionSet implements TransactionInterface {
     private StrategyInterface strategyTo;
-    private int amountOfMoney;
+    private Integer amountOfMoney;
     private AccountInterface accountTo;
 
     public TransactionSet(
-                           StrategyInterface _strategyTo,
-                           int _amountOfMoney,
-                           AccountInterface _accountTo) {
-        strategyTo = _strategyTo;
-        accountTo = _accountTo;
-        amountOfMoney = _amountOfMoney;
+                           StrategyInterface strategyTo,
+                           Integer amountOfMoney,
+                           AccountInterface accountTo) {
+        this.strategyTo = strategyTo;
+        this.accountTo = accountTo;
+        this.amountOfMoney = amountOfMoney;
     }
+
     @Override
     public void madeTransaction() {
         strategyTo.setMoney(amountOfMoney, accountTo);

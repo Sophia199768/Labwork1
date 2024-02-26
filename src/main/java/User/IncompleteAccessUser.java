@@ -1,13 +1,13 @@
 package User;
 
 public class IncompleteAccessUser extends State {
-    public IncompleteAccessUser(User _user) {
-        super(_user);
+    public IncompleteAccessUser(User user) {
+        super(user);
     }
 
     @Override
-    State addMissingData(String _address, int _passport) {
-        super.user.addMissingData(_address, _passport);
+    State addMissingData(String address, Integer passport) {
+        super.user.addMissingData(address, passport);
         return new FullAccessUser(this.user);
     }
 }

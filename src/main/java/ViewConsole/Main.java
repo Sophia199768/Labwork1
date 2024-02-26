@@ -13,8 +13,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    public static List<BankInterface> banks = new LinkedList<BankInterface>();
-    private static int currentBank;
+    public static List<BankInterface> banks = new LinkedList<>();
+    private static Integer currentBank;
 
     public static void chooseBank() {
         Scanner scanner = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class Main {
             System.out.println((i + 1) + ". " + choices[i]);
         }
 
-        int choice;
+        Integer choice;
         do {
             System.out.print("Choose an option: ");
             choice = scanner.nextInt();
@@ -69,7 +69,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String name = "";
         String surname = "";
-        int passport = 0;
+        Integer passport = 0;
         State newState;
 
         do {
@@ -137,16 +137,14 @@ public class Main {
     }
 
     public static void days() {
-        for (int i = 0; i < banks.size(); i++) {
-            banks.get(i).countDays();
-        }
+        banks.forEach(bank -> bank.countDays());
     }
 
     public static void main(String[] args)
     {
-        banks.add(new Bank("Sberbank",4,5));
-        banks.add(new Bank("AlfaBank", 6, 9));
-        banks.add(new Bank("Tinkoff", 12, 3));
+        banks.add(new Bank("Sberbank",4,5.0, 200));
+        banks.add(new Bank("AlfaBank", 6, 9.3, 400));
+        banks.add(new Bank("Tinkoff", 12, 3.0, 600));
         chooseBank();
     }
 }

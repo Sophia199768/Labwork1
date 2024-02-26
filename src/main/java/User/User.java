@@ -12,14 +12,14 @@ public class User {
     private String name;
     private String surname;
     private String address;
-    private int passport;
+    private Integer passport;
 
 
-    public User(String _name, String _surname, String _address, int _passport) {
-        name = _name;
-        surname = _surname;
-        address = _address;
-        passport = _passport;
+    public User(String name, String surname, String address, Integer passport) {
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.passport = passport;
     }
     /**
      * <p>This is a description of the method update
@@ -42,8 +42,8 @@ public class User {
         return address;
     }
 
-    public void addMissingData(String _address, int _passport) {
-        address = _address;
-        passport = _passport;
+    public void addMissingData(String address, Integer passport) {
+        this.address = address;
+        this.passport = passport;
     }
 }

@@ -6,15 +6,15 @@ import Result.SuccessGetMoney;
 
 public class TransactionGet implements TransactionInterface {
     private StrategyInterface strategyFrom;
-    private int amountOfMoney;
+    private Integer amountOfMoney;
     private AccountInterface accountFrom;
 
-    public TransactionGet(StrategyInterface _strategyFrom,
-                           int _amountOfMoney,
-                           AccountInterface _accountFrom) {
-        strategyFrom = _strategyFrom;
-        accountFrom = _accountFrom;
-        amountOfMoney = _amountOfMoney;
+    public TransactionGet(StrategyInterface strategyFrom,
+                          Integer amountOfMoney,
+                          AccountInterface accountFrom) {
+        this.strategyFrom = strategyFrom;
+        this.accountFrom = accountFrom;
+        this.amountOfMoney = amountOfMoney;
     }
     @Override
     public void madeTransaction() {

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BankManager {
-    private List<State> usersState = new LinkedList<State>();
+    private List<State> usersState = new LinkedList<>();
     public void subscribe(State user) {
         usersState.add(user);
     }
@@ -16,8 +16,6 @@ public class BankManager {
     }
 
     public void notifyBanks(NotifyMessage notify) {
-        for (int listener = 0; listener < usersState.size(); listener++) {
-            usersState.get(listener).update(notify);
-        }
+        usersState.forEach(user -> user.update(notify));
     }
 }

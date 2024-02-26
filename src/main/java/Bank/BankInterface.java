@@ -1,14 +1,15 @@
 package Bank;
 
+import Account.AccountInterface;
 import User.User;
 
 public interface BankInterface {
-   void changeProcent(int newProcent);
+   void changeProcent(Integer newProcent);
    void update(NotifyMessage filename);
-   void setProcentToOverdraft(int newOverdraftProcent);
+   void setProcentToOverdraft(Double newOverdraftProcent);
    void countDays();
-   void createAccount(String account, User user, int amountOfMoney);
-
+   AccountInterface createAccount(String account, User user, Integer amountOfMoney);
    BankManager returnManager();
    String getName();
+   Integer getLimit();
 }
