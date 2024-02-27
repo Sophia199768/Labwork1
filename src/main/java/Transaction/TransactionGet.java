@@ -16,6 +16,14 @@ public class TransactionGet implements TransactionInterface {
         this.accountFrom = accountFrom;
         this.amountOfMoney = amountOfMoney;
     }
+
+    /**
+     * <p>
+     *   madeTransaction
+     *   Function to make a transaction of get.
+     *   When user wants to get money from account this transaction is starting to execute
+     * </p>
+     */
     @Override
     public void madeTransaction() {
         if (strategyFrom.getMoney(amountOfMoney, accountFrom) instanceof SuccessGetMoney) {
@@ -23,6 +31,13 @@ public class TransactionGet implements TransactionInterface {
         }
     }
 
+    /**
+     * <p>
+     *   canselTransaction
+     *   Function to cansel transaction
+     *   If user wants to cansel his get action
+     * </p>
+     */
     @Override
     public void canselTransaction() {
         accountFrom.restore();

@@ -1,14 +1,19 @@
 package Bank;
 
 import Account.*;
+import Transaction.TransactionGet;
+import Transaction.TransactionInterface;
+import Transaction.TransactionSend;
+import Transaction.TransactionSet;
 import User.User;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Bank implements BankInterface {
+public class Bank {
     private final BankManager manager = new BankManager();
     private final List<DebitDepositAccountInterface> accounts = new LinkedList<>();
     private final List<CreditAccountInterface> creditAccount = new LinkedList<>();
+    private List<TransactionInterface> transactions = new LinkedList<>();
     private final String name;
     private final Integer procent;
     private final Double procentToOverdraft;
@@ -21,16 +26,15 @@ public class Bank implements BankInterface {
         this.limit = limit;
     }
 
-    @Override
+
     public BankManager returnManager() {
         return manager;
     }
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
+
     public Integer getLimit() {return limit; }
 
     /**
@@ -44,7 +48,7 @@ public class Bank implements BankInterface {
      * </p>
      * @return AccountInterface
      */
-    @Override
+
     public AccountInterface createAccount(String account, User user, Integer amountOfMoney) {
         switch (account) {
             case "credit" -> {
@@ -65,7 +69,6 @@ public class Bank implements BankInterface {
         }
     }
 
-    @Override
     public void changeProcent(Integer newProcent) {
         accounts.forEach(account -> account.changeProcent(newProcent));
     }
@@ -78,7 +81,6 @@ public class Bank implements BankInterface {
         creditAccount.forEach(account -> account.addComission());
     }
 
-    @Override
     public void setProcentToOverdraft(Double newOverdraftProcent) {
         creditAccount.forEach(account -> account.setProcentToOverdraft(newOverdraftProcent));
     }
@@ -89,7 +91,6 @@ public class Bank implements BankInterface {
      *   Function helps count days
      * </p>
      */
-    @Override
     public void countDays() {
         accounts.forEach(account -> account.countProcentMoney());
     }
@@ -100,12 +101,41 @@ public class Bank implements BankInterface {
      *   Function to add oparations such as addToBalance, addComission.
      * </p>
      */
-    @Override
     public void update(NotifyMessage filename) {
         if (filename.equals(NotifyMessage.remaining)) {
             addToBalance();
         } else if (filename.equals(NotifyMessage.commission)) {
             addComission();
         }
+    }
+
+    public void transactionSend(StrategyInterface strategyFrom,
+                                              StrategyInterface strategyTo,
+                                              Integer amountOfMoney,
+                                              AccountInterface accountFrom,
+                                              AccountInterface accountTo) {
+        TransactionSend newTransaction = new TransactionSend(strategyFrom, strategyTo, amountOfMoney, accountFrom, accountTo);
+        newTransaction.madeTransaction();
+        transactions.add(newTransaction);
+    }
+
+    public void transactionGet(StrategyInterface strategyFrom,
+                               Integer amountOfMoney,
+                               AccountInterface accountFrom) {
+        TransactionGet newTransaction = new TransactionGet(strategyFrom, amountOfMoney, accountFrom);
+        newTransaction.madeTransaction();
+        transactions.add(newTransaction);
+    }
+
+    public void transactionSet(StrategyInterface strategyTo,
+                               Integer amountOfMoney,
+                               AccountInterface accountTo) {
+        TransactionSet newTransaction = new TransactionSet(strategyTo, amountOfMoney, accountTo);
+        newTransaction.madeTransaction();
+        transactions.add(newTransaction);
+    }
+
+    public void canselTransaction(Integer indexCancel) {
+        transactions.get(indexCancel).canselTransaction();
     }
 }

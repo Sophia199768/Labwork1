@@ -1,7 +1,6 @@
 package ViewConsole;
 
 import Bank.Bank;
-import Bank.BankInterface;
 import User.State;
 import User.User;
 import User.IncompleteAccessUser;
@@ -13,7 +12,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    public static List<BankInterface> banks = new LinkedList<>();
+    public static List<Bank> banks = new LinkedList<>();
     private static Integer currentBank;
 
     public static void chooseBank() {
