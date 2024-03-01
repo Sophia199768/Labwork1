@@ -1,6 +1,8 @@
 package Transaction;
 
+import Result.ResultInterface;
+
 public interface TransactionInterface {
-    void madeTransaction();
+    ResultInterface madeTransaction();
     void canselTransaction();
 }

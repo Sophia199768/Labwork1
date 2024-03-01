@@ -2,7 +2,7 @@ package Transaction;
 
 import Account.AccountInterface;
 import Account.StrategyInterface;
-import Result.SuccessGetMoney;
+import Result.ResultInterface;
 
 public class TransactionSend implements TransactionInterface {
     private StrategyInterface strategyFrom;
@@ -23,13 +23,25 @@ public class TransactionSend implements TransactionInterface {
         this.amountOfMoney = amountOfMoney;
     }
 
+    /**
+     * <p>
+     *   madeTransaction
+     *   Function to make a transaction of send.
+     *   When user wants to send money from one account to another.
+     * </p>
+     */
     @Override
-    public void madeTransaction() {
-        if (strategyFrom.getMoney(amountOfMoney, accountFrom) instanceof SuccessGetMoney) {
-            strategyTo.setMoney(amountOfMoney, accountTo);
-        }
+    public ResultInterface madeTransaction() {
+           return strategyTo.setMoney(amountOfMoney, accountTo);
     }
 
+    /**
+     * <p>
+     *   canselTransaction
+     *   Function to cansel transaction
+     *   If user wants to cansel his send transaction
+     * </p>
+     */
     @Override
     public void canselTransaction() {
         accountFrom.restore();

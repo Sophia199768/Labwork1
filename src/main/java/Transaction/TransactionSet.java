@@ -2,6 +2,7 @@ package Transaction;
 
 import Account.AccountInterface;
 import Account.StrategyInterface;
+import Result.ResultInterface;
 
 public class TransactionSet implements TransactionInterface {
     private StrategyInterface strategyTo;
@@ -17,11 +18,25 @@ public class TransactionSet implements TransactionInterface {
         this.amountOfMoney = amountOfMoney;
     }
 
+    /**
+     * <p>
+     *   madeTransaction
+     *   Function to make a transaction of set.
+     *   When user wants to set money in one concrete account.
+     * </p>
+     */
     @Override
-    public void madeTransaction() {
-        strategyTo.setMoney(amountOfMoney, accountTo);
+    public ResultInterface madeTransaction() {
+        return strategyTo.setMoney(amountOfMoney, accountTo);
     }
 
+    /**
+     * <p>
+     *   canselTransaction
+     *   Function to cansel transaction
+     *   If user wants to cansel his set action
+     * </p>
+     */
     @Override
     public void canselTransaction() {
         accountTo.restore();

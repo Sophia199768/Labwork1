@@ -2,7 +2,7 @@ package Transaction;
 
 import Account.AccountInterface;
 import Account.StrategyInterface;
-import Result.SuccessGetMoney;
+import Result.ResultInterface;
 
 public class TransactionGet implements TransactionInterface {
     private StrategyInterface strategyFrom;
@@ -24,11 +24,10 @@ public class TransactionGet implements TransactionInterface {
      *   When user wants to get money from account this transaction is starting to execute
      * </p>
      */
+
     @Override
-    public void madeTransaction() {
-        if (strategyFrom.getMoney(amountOfMoney, accountFrom) instanceof SuccessGetMoney) {
-            strategyFrom.getMoney(amountOfMoney, accountFrom);
-        }
+    public ResultInterface madeTransaction() {
+        return strategyFrom.getMoney(amountOfMoney, accountFrom);
     }
 
     /**

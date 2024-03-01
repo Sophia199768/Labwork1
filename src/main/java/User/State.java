@@ -10,6 +10,13 @@ public abstract class State {
     }
 
     abstract State addMissingData(String _address, Integer _passport);
+
+    /**
+     * <p>
+     *   Update
+     *   Function to notify user about some events.
+     * </p>
+     */
     public void update(NotifyMessage notify) {
         user.update(notify);
     }

@@ -60,9 +60,7 @@ public class Main {
 
     }
 
-
     public static void entrance() {
-
     }
     public static void register() {
         Scanner scanner = new Scanner(System.in);

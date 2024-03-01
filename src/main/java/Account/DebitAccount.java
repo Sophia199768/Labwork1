@@ -1,9 +1,6 @@
 package Account;
 
-import Result.NegativeAmountOfMoney;
-import Result.ResultInterface;
-import Result.SuccessGetMoney;
-import Result.SuccessSetMoney;
+import Result.*;
 import User.User;
 
 import java.util.LinkedList;

@@ -12,13 +12,12 @@ public class UserTest extends TestCase {
         UserMatching userMatching = new UserMatching();
         MatchingUserState matchUser = new MatchingUserState();
 
-
         Bank newBank = new Bank("NewBankName", 4, 7.0, 200);
         AccountInterface newAccount = newBank.createAccount("credit", newUser, 20000);
 
-       ResultInterface result = userMatching.Match(matchUser.Match(newUser), newBank).getMoney(10000, newAccount);
+        ResultInterface result = newBank.transactionGet(userMatching.Match(matchUser.Match(newUser), newBank), 10000, newAccount);
 
-       assertTrue(result instanceof UnSafeAccount);
+        assertTrue(result instanceof UnSafeAccount);
     }
 
     public void testFullAccessAccount() {
@@ -26,11 +25,9 @@ public class UserTest extends TestCase {
         UserMatching userMatching = new UserMatching();
         MatchingUserState matchUser = new MatchingUserState();
 
-
         Bank newBank = new Bank("NewBankName", 4, 7.0, 200);
         AccountInterface newAccount = newBank.createAccount("credit", newUser, 20000);
-
-        ResultInterface result = userMatching.Match(matchUser.Match(newUser), newBank).getMoney(10000, newAccount);
+        ResultInterface result = newBank.transactionGet(userMatching.Match(matchUser.Match(newUser), newBank), 10000, newAccount);
 
         assertTrue(result instanceof SuccessGetMoney);
     }
@@ -44,7 +41,7 @@ public class UserTest extends TestCase {
         Bank newBank = new Bank("NewBankName", 4, 7.0, 200);
         AccountInterface newAccount = newBank.createAccount("debit", newUser, 20000);
 
-        ResultInterface result = userMatching.Match(matchUser.Match(newUser), newBank).getMoney(100000, newAccount);
+        ResultInterface result = newBank.transactionGet(userMatching.Match(matchUser.Match(newUser), newBank), 100000, newAccount);
 
         assertTrue(result instanceof NegativeAmountOfMoney);
     }
@@ -58,7 +55,7 @@ public class UserTest extends TestCase {
         Bank newBank = new Bank("NewBankName", 4, 7.0, 200);
         AccountInterface newAccount = newBank.createAccount("debit", newUser, 20000);
 
-        ResultInterface result = userMatching.Match(matchUser.Match(newUser), newBank).getMoney(1000, newAccount);
+        ResultInterface result = newBank.transactionGet(userMatching.Match(matchUser.Match(newUser), newBank), 10000, newAccount);
 
         assertTrue(result instanceof SuccessGetMoney);
     }
@@ -72,7 +69,7 @@ public class UserTest extends TestCase {
         Bank newBank = new Bank("NewBankName", 4, 7.0, 200);
         AccountInterface newAccount = newBank.createAccount("debit", newUser, 20000);
 
-        ResultInterface result = userMatching.Match(matchUser.Match(newUser), newBank).setMoney(1000, newAccount);
+        ResultInterface result = newBank.transactionSet(userMatching.Match(matchUser.Match(newUser), newBank), 1000, newAccount);
 
         assertTrue(result instanceof SuccessSetMoney);
     }

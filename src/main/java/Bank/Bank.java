@@ -1,10 +1,8 @@
 package Bank;
 
 import Account.*;
-import Transaction.TransactionGet;
-import Transaction.TransactionInterface;
-import Transaction.TransactionSend;
-import Transaction.TransactionSet;
+import Result.ResultInterface;
+import Transaction.*;
 import User.User;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +46,6 @@ public class Bank {
      * </p>
      * @return AccountInterface
      */
-
     public AccountInterface createAccount(String account, User user, Integer amountOfMoney) {
         switch (account) {
             case "credit" -> {
@@ -109,32 +106,59 @@ public class Bank {
         }
     }
 
-    public void transactionSend(StrategyInterface strategyFrom,
+    /**
+     * <p>
+     *   transactionSend
+     *   Function to send money in on bank
+     * </p>
+     */
+    public ResultInterface transactionSend(StrategyInterface strategyFrom,
                                               StrategyInterface strategyTo,
                                               Integer amountOfMoney,
                                               AccountInterface accountFrom,
                                               AccountInterface accountTo) {
         TransactionSend newTransaction = new TransactionSend(strategyFrom, strategyTo, amountOfMoney, accountFrom, accountTo);
-        newTransaction.madeTransaction();
+        ResultInterface result = newTransaction.madeTransaction();
         transactions.add(newTransaction);
+        return result;
     }
 
-    public void transactionGet(StrategyInterface strategyFrom,
-                               Integer amountOfMoney,
-                               AccountInterface accountFrom) {
+    /**
+     * <p>
+     *   transactionGet
+     *   Function to get money from concrete user account
+     * </p>
+     */
+    public ResultInterface transactionGet(StrategyInterface strategyFrom,
+                                          Integer amountOfMoney,
+                                          AccountInterface accountFrom) {
         TransactionGet newTransaction = new TransactionGet(strategyFrom, amountOfMoney, accountFrom);
-        newTransaction.madeTransaction();
+        ResultInterface result = newTransaction.madeTransaction();
         transactions.add(newTransaction);
+        return result;
     }
 
-    public void transactionSet(StrategyInterface strategyTo,
+    /**
+     * <p>
+     *   transactionSet
+     *   Function to set money to concrete user account
+     * </p>
+     */
+    public ResultInterface transactionSet(StrategyInterface strategyTo,
                                Integer amountOfMoney,
                                AccountInterface accountTo) {
         TransactionSet newTransaction = new TransactionSet(strategyTo, amountOfMoney, accountTo);
-        newTransaction.madeTransaction();
+        ResultInterface result = newTransaction.madeTransaction();
         transactions.add(newTransaction);
+        return result;
     }
 
+    /**
+     * <p>
+     *   canselTransaction
+     *   Function to cansel some transactions
+     * </p>
+     */
     public void canselTransaction(Integer indexCancel) {
         transactions.get(indexCancel).canselTransaction();
     }

@@ -2,8 +2,7 @@ package Bank;
 
 import Account.AccountInterface;
 import Account.StrategyInterface;
-import Transaction.TransactionInterface;
-import Transaction.TransactionSend;
+import Transaction.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +27,12 @@ public class CentralBank {
         return newBank;
     }
 
+    /**
+     * <p>
+     *   transactionSendBetweenToBanks
+     *   Function to send money between two accounts from another banks
+     * </p>
+     */
     public void transactionSendBetweenToBanks(StrategyInterface strategyFrom,
                                               StrategyInterface strategyTo,
                                               Integer amountOfMoney,
@@ -38,6 +43,12 @@ public class CentralBank {
         transcactionBeetweenTwoBanks.add(newTransaction);
     }
 
+    /**
+     * <p>
+     *   canselTransactions
+     *   Function to cansel send transaction
+     * </p>
+     */
     public void canselTransaction(Integer indexOfCanselTransaction) {
         transcactionBeetweenTwoBanks.get(indexOfCanselTransaction).canselTransaction();
     }
